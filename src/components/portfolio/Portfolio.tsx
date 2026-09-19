@@ -657,7 +657,7 @@ function Contact({ resumeUrl }: { resumeUrl: string }) {
             </span>
             <ArrowUpRight />
           </a>
-          <a href="https://linkedin.com/in/shreya-shukla" target="_blank" rel="noreferrer">
+          <a href="https://linkedin.com/in/shreya-shukla-" target="_blank" rel="noreferrer">
             <Linkedin />
             <span>
               <small>LinkedIn</small>shreya-shukla
