@@ -1803,7 +1803,9 @@ footer svg {
     overflow: hidden;
   }
   .hero-scene canvas {
-    display: none;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
   }
   .hero-scene:before {
     content: "";
@@ -1836,10 +1838,6 @@ footer svg {
   }
   .scene-label {
     font-size: 0.5rem;
-  }
-  .scene-label-1,
-  .scene-label-4 {
-    display: none;
   }
   .scene-index {
     bottom: 2%;

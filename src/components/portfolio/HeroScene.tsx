@@ -1,4 +1,4 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Line, Points, PointMaterial } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,7 +13,21 @@ const technologies = [
   { label: "Database", position: [0.2, -2.35, -0.3] },
 ] as const;
 
-function SystemCore() {
+function ResponsiveCamera({ compact }: { compact: boolean }) {
+  const { camera, size } = useThree();
+
+  useEffect(() => {
+    if (!(camera instanceof THREE.PerspectiveCamera)) return;
+    camera.position.set(0, compact ? 0.08 : 0, compact ? 8.4 : 7.4);
+    camera.fov = compact ? 52 : 43;
+    camera.aspect = size.width / size.height;
+    camera.updateProjectionMatrix();
+  }, [camera, compact, size.height, size.width]);
+
+  return null;
+}
+
+function SystemCore({ compact }: { compact: boolean }) {
   const group = useRef<THREE.Group>(null);
   const halo = useRef<THREE.Group>(null);
   const nodes = useMemo(
@@ -71,7 +85,7 @@ function SystemCore() {
   });
 
   return (
-    <group ref={group}>
+    <group ref={group} scale={compact ? 0.74 : 1}>
       <mesh scale={0.78}>
         <icosahedronGeometry args={[1.55, 3]} />
         <meshStandardMaterial
@@ -180,7 +194,7 @@ export function HeroScene() {
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
-  if (reduced || compact) return null;
+  if (reduced) return null;
 
   return (
     <div className="absolute inset-0 hero-canvas" aria-hidden="true">
@@ -189,10 +203,11 @@ export function HeroScene() {
         dpr={[1, 1.35]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
+        <ResponsiveCamera compact={compact} />
         <ambientLight intensity={0.52} />
         <pointLight position={[3, 3, 4]} color="#8be8ff" intensity={8} distance={12} />
         <pointLight position={[-3, -2, 3]} color="#d7ff73" intensity={5} distance={10} />
-        <SystemCore />
+        <SystemCore compact={compact} />
       </Canvas>
       <div className="pointer-events-none absolute inset-0">
         {technologies.map(({ label }, index) => (
