@@ -99,8 +99,8 @@ function MagneticLink({
     <motion.a
       href={href}
       download={download}
-      target={download ? undefined : "_blank"}
-      rel={download ? undefined : "noreferrer"}
+      target={href.startsWith("#") || download ? undefined : "_blank"}
+      rel={href.startsWith("#") || download ? undefined : "noreferrer"}
       className={`magnetic-link magnetic-${variant}`}
       onMouseMove={move}
       onMouseLeave={() => setOffset({ x: 0, y: 0 })}
