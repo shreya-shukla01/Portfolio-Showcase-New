@@ -6,6 +6,9 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import netlify from "@netlify/vite-plugin-tanstack-start";
 
 export default defineConfig({
+  ssr: {
+    noExternal: ["three", "@react-three/fiber", "@react-three/drei"],
+  },
   plugins: [
     tanstackStart({
       server: { entry: "server" },
